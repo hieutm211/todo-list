@@ -48,7 +48,7 @@ function List(props) {
           <li key={el.id}>
             <button>tick</button>
             {el.description}
-            <button>delete</button>
+            <button onClick={() => props.removeTask(el.id)}>delete</button>
           </li>
         );
       })}
@@ -66,14 +66,30 @@ function App() {
   function addTask(description) {
     setIncompleteList([...incompleteList, {id: currentId, description}]);
     setCurrentId(currentId+1);
-    console.log(description, incompleteList);
   }
+
+  function removeTask(id) {
+    let list = currentList ? completedList : incompleteList;
+    let newList = [];
+    
+    for (let el of list) {
+      if (el.id !== id) {
+        newList.push({...el});
+      }
+    }
+
+    if (currentList === 0) {
+      setIncompleteList(newList);
+    } else {
+      setCompletedList(newList);
+    }
+  } 
 
   return (
     <div class="App">
       <Header />
       <Form addTask={addTask}/>
-      <List value={currentList ? completedList : incompleteList}/>
+      <List value={currentList ? completedList : incompleteList} removeTask={removeTask}/>
     </div>
   );
 }
