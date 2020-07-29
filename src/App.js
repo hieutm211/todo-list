@@ -20,10 +20,21 @@ function Header(props) {
 }
 
 function Form(props) {
+  const [description, setDescription] = useState('');
+
+  function handleChange(event) {
+    setDescription(event.target.value);
+  }
+
+  function addTask(description) {
+    props.addTask(description);
+    setDescription('');
+  }
+
   return (
     <div>
-        <input></input>
-        <button>add task</button>  
+        <input type="text" value={description} onChange={handleChange}></input>
+        <button onClick={() => addTask(description)}>add task</button>  
         <div>error message</div>
     </div>
   );
@@ -49,13 +60,20 @@ function App() {
   const [incompleteList, setIncompleteList] = useState([]);
   const [completedList, setCompletedList] = useState([]);
   const [inIncompletedList, setInIncompletedList] = useState(true);
-  const [currentList, setCurrentList] = useState(incompleteList);
+  const [currentList, setCurrentList] = useState(0);
+  const [currentId, setCurrentId] = useState(0);
+
+  function addTask(description) {
+    setIncompleteList([...incompleteList, {id: currentId, description}]);
+    setCurrentId(currentId+1);
+    console.log(description, incompleteList);
+  }
 
   return (
     <div class="App">
       <Header />
-      <Form />
-      <List value={currentList}/>
+      <Form addTask={addTask}/>
+      <List value={currentList ? completedList : incompleteList}/>
     </div>
   );
 }
