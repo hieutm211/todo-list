@@ -21,21 +21,37 @@ function Header(props) {
 
 function Form(props) {
   const [description, setDescription] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   function handleChange(event) {
     setDescription(event.target.value);
   }
 
+  function verify(description) {
+    if (description === "") {
+      return "Please enter in a task";
+    }
+    return null;
+  }
+
   function addTask(description) {
-    props.addTask(description);
-    setDescription('');
+    description = description.trim();
+
+    let error = verify(description);
+    if (!error) {
+      setErrorMessage(null);
+      props.addTask(description);
+      setDescription('');
+    } else {
+      setErrorMessage(error);
+    }
   }
 
   return (
     <div>
         <input type="text" value={description} onChange={handleChange}></input>
         <button onClick={() => addTask(description)}>add task</button>  
-        <div>error message</div>
+        <div>{errorMessage}</div>
     </div>
   );
 }
