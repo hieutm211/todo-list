@@ -34,6 +34,12 @@ function Form(props) {
     setDescription(event.target.value);
   }
 
+  function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      addTask(description);
+    }
+  }
+
   function addTask(description) {
     description = description.trim();
 
@@ -50,7 +56,7 @@ function Form(props) {
   return (
     <div className="taskForm"> 
       <div class="form">
-          <input type="text" value={description} onChange={handleChange} placeholder="Enter a task..."></input>
+          <input type="text" value={description} onKeyDown={handleKeyDown} onChange={handleChange} placeholder="Enter a task..."></input>
           <button onClick={() => addTask(description)}>Add Task</button>  
       </div>
 
