@@ -19,3 +19,7 @@ button {
     border: none;
     margin: 0; /* 2 */
 }
+
+button:hover {
+    cursor: pointer;
+}

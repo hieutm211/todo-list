@@ -74,6 +74,8 @@ nav button {
 
 ul {
     list-style: none;
+    height: 393px;
+    overflow-y: scroll;
 }
 
 li:first-child {

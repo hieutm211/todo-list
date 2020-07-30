@@ -28,7 +28,7 @@ function Header(props) {
 
 function Form(props) {
   const [description, setDescription] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState(null);
 
   function handleChange(event) {
     setDescription(event.target.value);
