@@ -1,4 +1,10 @@
 import React, {useState, useEffect} from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
 import './App.css';
 
 function Header(props) {
@@ -7,8 +13,8 @@ function Header(props) {
   "July", "August", "September", "October", "November", "December"
 ];
 
-  let incompClassName = props.currentList ? '' : 'active';
-  let compClassName = props.currentList ? 'active': '';
+  let incompClassName = props.currentList ? 'Link' : 'Link active';
+  let compClassName = props.currentList ? 'Link active': 'Link';
   
   const today = new Date();
   return (
@@ -18,8 +24,8 @@ function Header(props) {
           {dayNames[today.getDay()]}, {monthNames[today.getMonth()]} {today.getDate()}
         </div>
         <nav>
-          <button className={incompClassName} onClick={ (event) => props.setCurrentList(0) }>Incomplete Tasks</button>
-          <button className={compClassName} onClick={ () => props.setCurrentList(1) } >Completed Tasks</button>
+          <Link to="/" className={incompClassName} onClick={ (event) => props.setCurrentList(0) }>Incomplete Tasks</Link>
+          <Link to="/completed" className={compClassName} onClick={ () => props.setCurrentList(1) } >Completed Tasks</Link>
         </nav>
       </div>
         
@@ -188,14 +194,25 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <Header 
-          activeTask={incompleteList.length} 
-          currentList = {currentList}
-          setCurrentList={setCurrentList} 
-          addTask={addTask} 
-          verify={verify}
-        />
-        <List value={getCurrentList()} moveTask={moveTask} removeTask={removeTask}/>
+        <Router>
+          <Header 
+            activeTask={incompleteList.length} 
+            currentList = {currentList}
+            setCurrentList={setCurrentList} 
+            addTask={addTask} 
+            verify={verify}
+          />
+
+          <Switch>
+            <Route exact path="/">
+              <List value={incompleteList} moveTask={moveTask} removeTask={removeTask}/>
+            </Route>
+            <Route path="/completed">
+              <List value={completedList} moveTask={moveTask} removeTask={removeTask}/>
+            </Route>
+          </Switch>
+          
+        </Router>
       </div>
     </div>
   );
