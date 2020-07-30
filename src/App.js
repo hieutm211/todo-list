@@ -6,6 +6,10 @@ function Header(props) {
   const monthNames = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"
 ];
+
+  let incompClassName = props.currentList ? '' : 'active';
+  let compClassName = props.currentList ? 'active': '';
+  
   const today = new Date();
   return (
     <header>
@@ -14,8 +18,8 @@ function Header(props) {
           {dayNames[today.getDay()]}, {monthNames[today.getMonth()]} {today.getDate()}
         </div>
         <nav>
-          <button onClick={ (event) => props.setCurrentList(0) }>Incomplete Tasks</button>
-          <button onClick={ () => props.setCurrentList(1) } >Completed Tasks</button>
+          <button className={incompClassName} onClick={ (event) => props.setCurrentList(0) }>Incomplete Tasks</button>
+          <button className={compClassName} onClick={ () => props.setCurrentList(1) } >Completed Tasks</button>
         </nav>
       </div>
         
@@ -55,7 +59,7 @@ function Form(props) {
 
   return (
     <div className="taskForm"> 
-      <div class="form">
+      <div className="form">
           <input type="text" value={description} onKeyDown={handleKeyDown} onChange={handleChange} placeholder="Enter a task..."></input>
           <button onClick={() => addTask(description)}>Add Task</button>  
       </div>
@@ -184,7 +188,13 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <Header activeTask={incompleteList.length} setCurrentList={setCurrentList} addTask={addTask} verify={verify}/>
+        <Header 
+          activeTask={incompleteList.length} 
+          currentList = {currentList}
+          setCurrentList={setCurrentList} 
+          addTask={addTask} 
+          verify={verify}
+        />
         <List value={getCurrentList()} moveTask={moveTask} removeTask={removeTask}/>
       </div>
     </div>

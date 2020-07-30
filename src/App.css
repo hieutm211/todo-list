@@ -34,6 +34,7 @@ header::after {
 
 nav {
     display: flex;
+    color: #8D9196;
 }
 
 nav button {
@@ -90,5 +91,9 @@ li {
     flex-grow: 1;
     margin: auto 2rem;
     font-size: 1.6rem;
+    color: white;
+}
+
+.active {
     color: white;
 }
