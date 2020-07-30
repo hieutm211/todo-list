@@ -21,7 +21,7 @@ function Header(props) {
         
       <div className="activeTasks">{props.activeTask} Active Tasks</div>
 
-      <Form addTask={props.addTask}/>
+      <Form verify={props.verify} addTask={props.addTask}/>
     </header>
   );
 }
@@ -34,17 +34,10 @@ function Form(props) {
     setDescription(event.target.value);
   }
 
-  function verify(description) {
-    if (description === "") {
-      return "Please enter in a task";
-    }
-    return null;
-  }
-
   function addTask(description) {
     description = description.trim();
 
-    let error = verify(description);
+    let error = props.verify(description);
     if (!error) {
       setErrorMessage(null);
       props.addTask(description);
@@ -117,6 +110,27 @@ function App() {
     return currentList ? completedList : incompleteList;
   }
 
+  function verify(description) {
+    if (description === "") {
+      return "Please enter in a task";
+    }
+
+    if (findTask(incompleteList, description) || findTask(completedList, description)) {
+      return "This task already exists";
+    }
+
+    return null;
+  }
+
+  function findTask(list, description) {
+    for (let task of list) {
+      if (task.description === description) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function addTask(description) {
     setIncompleteList([...incompleteList, {id: currentId, description}]);
     setCurrentId(currentId+1);
@@ -164,7 +178,7 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-        <Header activeTask={incompleteList.length} setCurrentList={setCurrentList} addTask={addTask}/>
+        <Header activeTask={incompleteList.length} setCurrentList={setCurrentList} addTask={addTask} verify={verify}/>
         <List value={getCurrentList()} moveTask={moveTask} removeTask={removeTask}/>
       </div>
     </div>
