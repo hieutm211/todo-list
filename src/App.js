@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 
 function Header(props) {
@@ -31,7 +31,7 @@ function Header(props) {
 }
 
 function Form(props) {
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useStateWithLocalStorage('description');
   const [errorMessage, setErrorMessage] = useState(null);
 
   function handleChange(event) {
@@ -111,10 +111,10 @@ function List(props) {
 }
 
 function App() {
-  const [incompleteList, setIncompleteList] = useState([]);
-  const [completedList, setCompletedList] = useState([]);
+  const [incompleteList, setIncompleteList] = useStateWithLocalStorage('incompleteList', []);
+  const [completedList, setCompletedList] = useStateWithLocalStorage('completedList', []);
   const [currentList, setCurrentList] = useState(0);
-  const [currentId, setCurrentId] = useState(0);
+  const [currentId, setCurrentId] = useStateWithLocalStorage('currentId', 0);
 
   function getCurrentList() {
     return currentList ? completedList : incompleteList;
@@ -199,6 +199,16 @@ function App() {
       </div>
     </div>
   );
+}
+
+const useStateWithLocalStorage = (localStorageKey, initalValue) => {
+  const [value, setValue] = useState(JSON.parse(localStorage.getItem(localStorageKey)) || initalValue || '');
+
+  useEffect(()=> {
+    localStorage.setItem(localStorageKey, JSON.stringify(value))
+  }, [localStorageKey, value]);
+
+  return [value, setValue];
 }
 
 export default App;
