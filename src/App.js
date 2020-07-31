@@ -8,14 +8,21 @@ import {
 import './App.css';
 
 function Header(props) {
+  const [incompClassName, setIncompClassName] = useState('Link active');
+  const [compClassName, setCompClassName] = useState('Link'); 
   const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-
-  let incompClassName = props.currentList ? 'Link' : 'Link active';
-  let compClassName = props.currentList ? 'Link active': 'Link';
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   
+  function setActive(listId) {
+    if (listId) {
+      setIncompClassName('Link');
+      setCompClassName('Link active');
+    } else {
+      setIncompClassName('Link active');
+      setCompClassName('Link');
+    }
+  }
+
   const today = new Date();
   return (
     <header>
@@ -24,8 +31,8 @@ function Header(props) {
           {dayNames[today.getDay()]}, {monthNames[today.getMonth()]} {today.getDate()}
         </div>
         <nav>
-          <Link to="/" className={incompClassName} onClick={ (event) => props.setCurrentList(0) }>Incomplete Tasks</Link>
-          <Link to="/completed" className={compClassName} onClick={ () => props.setCurrentList(1) } >Completed Tasks</Link>
+          <Link to="/" className={incompClassName} onClick={() => setActive(0)}>Incomplete Tasks</Link>
+          <Link to="/completed" className={compClassName} onClick={() => setActive(1)}>Completed Tasks</Link>
         </nav>
       </div>
         
@@ -119,32 +126,53 @@ function List(props) {
 function App() {
   const [incompleteList, setIncompleteList] = useStateWithLocalStorage('incompleteList', []);
   const [completedList, setCompletedList] = useStateWithLocalStorage('completedList', []);
-  const [currentList, setCurrentList] = useState(0);
-  const [currentId, setCurrentId] = useStateWithLocalStorage('currentId', 0);
-
-  function getCurrentList() {
-    return currentList ? completedList : incompleteList;
-  }
+  const [currentId, setCurrentId] = useStateWithLocalStorage('currentId', 1);
 
   function verify(description) {
     if (description === "") {
       return "Please enter in a task";
     }
 
-    if (findTask(incompleteList, description) || findTask(completedList, description)) {
+    if (findTask(incompleteList, description)) {
       return "This task already exists";
     }
 
     return null;
   }
 
-  function findTask(list, description) {
-    for (let task of list) {
-      if (task.description === description) {
-        return true;
+  function getList(id) {
+    return id ? completedList : incompleteList;
+  }
+
+  function findTask(description) {
+    incompleteList.forEach((element, index) => {
+      if (element.description === description) {
+        return [0, index];
       }
-    }
-    return false;
+    });
+    completedList.forEach((element, index) => {
+      if (element.description === description) {
+        return [1, index];
+      }
+    });
+    return null;
+  }
+
+  function findTaskWithId(id) {
+    let result = null;
+
+    incompleteList.forEach((element, index) => {
+      if (element.id === id) {
+        result = [0, index];
+      }
+    });
+    completedList.forEach((element, index) => {
+      if (element.id === id) {
+        result = [1, index];
+      }
+    });
+
+    return result;
   }
 
   function addTask(description) {
@@ -153,7 +181,10 @@ function App() {
   }
 
   function removeTask(id) {
-    let list = getCurrentList();
+    const listId = findTaskWithId(id)[0];
+    
+  
+    let list = getList(listId);
     let newList = [];
     
     for (let el of list) {
@@ -162,7 +193,7 @@ function App() {
       }
     }
 
-    if (currentList === 0) {
+    if (listId === 0) {
       setIncompleteList(newList);
     } else {
       setCompletedList(newList);
@@ -170,21 +201,15 @@ function App() {
   }
 
   function moveTask(id) {
-    let list = getCurrentList();
-    
-    //get value of task (whose id = id)
-    let task;
-    for (let el of list) {
-      if (el.id === id) {
-        task = {...el};
-      }
-    }
+    const [listId, index] = findTaskWithId(id);
+    //copy this task
+    let task = getList(listId)[index];
 
     //remove it from current list
     removeTask(id);
 
     //add it to the other list
-     if (currentList === 0) {
+     if (listId === 0) {
        setCompletedList([...completedList, task]);
     } else {
        setIncompleteList([...incompleteList, task]);
@@ -197,8 +222,6 @@ function App() {
         <Router>
           <Header 
             activeTask={incompleteList.length} 
-            currentList = {currentList}
-            setCurrentList={setCurrentList} 
             addTask={addTask} 
             verify={verify}
           />
