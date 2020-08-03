@@ -1,13 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
 import List from './List';
 import './App.css';
 
 function App() {
-  const [list, setList] =  useState([
-    [],
-    []
-  ]);
+  const [list, setList] = useState([[], []]);
   const [currentList, setCurrentList] = useState(0);
   const [currentId, setCurrentId] = useState(0);
 
@@ -24,12 +21,12 @@ function App() {
   }
 
   function verifyInput(description) {
-    if (description === "") {
-      return "Please enter in a task";
+    if (description === '') {
+      return 'Please enter in a task';
     }
 
     if (findTask(description)) {
-      return "This task already exists";
+      return 'This task already exists';
     }
 
     return null;
@@ -44,15 +41,15 @@ function App() {
     for (let i = 0; i < arr.length; i++) {
       result.push([]);
       for (let j = 0; j < arr[i].length; j++) {
-        result[i].push({...arr[i][j]});
+        result[i].push({ ...arr[i][j] });
       }
     }
     return result;
   }
 
   function removeElementIn2DArray(arr, row, col) {
-    for (let j = col; j < arr[row].length-1; j++) {
-      arr[row][j] = arr[row][j+1];
+    for (let j = col; j < arr[row].length - 1; j++) {
+      arr[row][j] = arr[row][j + 1];
     }
     arr[row].pop();
   }
@@ -62,11 +59,11 @@ function App() {
     let newList = copy2DArray(list);
 
     //add task to the incomplete list
-    newList[0].push({id: currentId, description});
+    newList[0].push({ id: currentId, description });
 
     //set new list
     setList(newList);
-    setCurrentId(currentId+1);
+    setCurrentId(currentId + 1);
   }
 
   function removeTask(currentList, index) {
@@ -82,7 +79,7 @@ function App() {
 
   function moveTask(currentList, index) {
     //copy this task
-    let task = {...list[currentList][index]};
+    let task = { ...list[currentList][index] };
 
     //copy the original array
     let newList = copy2DArray(list);
@@ -98,15 +95,19 @@ function App() {
   return (
     <div className="App">
       <div className="container">
-          <Header 
-            setCurrentList = {setCurrentList}
-            activeTask={list[0].length} 
-            addTask={addTask} 
-            verifyInput={verifyInput}
-          />
+        <Header
+          setCurrentList={setCurrentList}
+          activeTask={list[0].length}
+          addTask={addTask}
+          verifyInput={verifyInput}
+        />
 
-          <List list={getCurrentList()} currentList={currentList} moveTask={moveTask} removeTask={removeTask}/>
-          
+        <List
+          list={getCurrentList()}
+          currentList={currentList}
+          moveTask={moveTask}
+          removeTask={removeTask}
+        />
       </div>
     </div>
   );

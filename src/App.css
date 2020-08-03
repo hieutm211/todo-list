@@ -1,101 +1,100 @@
 .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-    width: 930px;
-    height: 630px;
-    box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.3);
-    border-radius: 5px;
-    padding: 40px;
+  width: 930px;
+  height: 630px;
+  box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  padding: 40px;
 
-    background-color: #393F49;
+  background-color: #393f49;
 
-    color: white;
+  color: white;
 }
 
 header {
-    border-bottom: 1px solid #8D9196;
-}
-header::after {
-    border-top: none;
+  border-bottom: 1px solid #8d9196;
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
 .date {
-    font-size: 1.6rem;
-    font-weight: 600;
+  font-size: 1.6rem;
+  font-weight: 600;
 }
 
 nav {
-    display: flex;
+  display: flex;
 }
 
-.Link {
-    margin-left: 5rem;
-    font-size: 1.6rem;
-    color: #8D9196;
-    text-decoration: none;
+.link {
+  margin-left: 5rem;
+  font-size: 1.6rem;
+  color: #8d9196;
+  text-decoration: none;
+}
+.link:hover {
+  cursor: pointer;
 }
 
 .active {
-    color: white;
+  color: white;
 }
 
-
 .activeTasks {
-    font-size: 1.2rem;
-    color: #61DBFB;
-    margin-bottom: 2rem;
+  font-size: 1.2rem;
+  color: #61dbfb;
+  margin-bottom: 2rem;
 }
 
 .form input {
-    width: 360px;
-    padding: 1rem;
-    font-size: 1.4rem;
-    border: none;
-    border-radius: 3px;
-    margin-right: 1rem;
+  width: 360px;
+  padding: 1rem;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 3px;
+  margin-right: 1rem;
 }
 .form button {
-    background-color: #61DBFB;
-    box-sizing: content-box;
-    padding: 1rem 1.5rem;
-    font-size: 1.4rem;
-    border-radius: 3px;
+  background-color: #61dbfb;
+  box-sizing: content-box;
+  padding: 1rem 1.5rem;
+  font-size: 1.4rem;
+  border-radius: 3px;
 }
 .taskForm {
-    margin-bottom: 4rem;
+  margin-bottom: 4rem;
 }
 
 .errorMsg {
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: red;
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: red;
 }
 
 ul {
-    list-style: none;
-    height: 393px;
-    overflow-y: scroll;
+  list-style: none;
+  height: 393px;
+  overflow-y: scroll;
 }
 
 li:first-child {
-    border-top: none;
+  border-top: none;
 }
 li {
-    display: flex;
-    border-top: 1px solid #8D9196;
-    height: 70px;
+  display: flex;
+  border-top: 1px solid #8d9196;
+  height: 70px;
 }
 .description {
-    flex-grow: 1;
-    margin: auto 2rem;
-    font-size: 1.6rem;
-    color: white;
+  flex-grow: 1;
+  margin: auto 2rem;
+  font-size: 1.6rem;
+  color: white;
 }
