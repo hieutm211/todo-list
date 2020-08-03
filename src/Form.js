@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 function Form(props) {
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
 
   function handleChange(event) {
@@ -9,7 +10,7 @@ function Form(props) {
   }
 
   function handleKeyDown(event) {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       addTask(description);
     }
   }
@@ -21,7 +22,7 @@ function Form(props) {
     if (!error) {
       setErrorMessage(null);
       props.addTask(description);
-      setDescription('');
+      setDescription("");
     } else {
       setErrorMessage(error);
     }
@@ -44,5 +45,10 @@ function Form(props) {
     </div>
   );
 }
+
+Form.propTypes = {
+  verifyInput: PropTypes.func.isRequired,
+  addTask: PropTypes.func.isRequired,
+};
 
 export default Form;

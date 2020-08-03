@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Header from './Header';
-import List from './List';
-import './App.css';
+import React, { useState } from "react";
+import Header from "./Header";
+import List from "./List";
+import "./App.css";
 
 function App() {
   const [list, setList] = useState([[], []]);
@@ -21,12 +21,12 @@ function App() {
   }
 
   function verifyInput(description) {
-    if (description === '') {
-      return 'Please enter in a task';
+    if (description === "") {
+      return "Please enter in a task";
     }
 
     if (findTask(description)) {
-      return 'This task already exists';
+      return "This task already exists";
     }
 
     return null;

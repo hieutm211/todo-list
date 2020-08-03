@@ -1,13 +1,14 @@
-import React from 'react';
+import React from "react";
+import PropTypes from "prop-types";
 
 function List(props) {
   if (props.currentList === 0 && props.list.length === 0) {
     return (
       <ul>
         <li>
-          <div class="description">
-            You currently have <span class="blue">0</span> tasks. Add a task to
-            get started!
+          <div className="description">
+            You currently have <span className="blue">0</span> tasks. Add a task
+            to get started!
           </div>
         </li>
       </ul>
@@ -63,5 +64,16 @@ function List(props) {
     </ul>
   );
 }
+
+List.defaultProps = {
+  currentList: 0,
+};
+
+List.propTypes = {
+  moveTask: PropTypes.func.isRequired,
+  removeTask: PropTypes.func.isRequired,
+  list: PropTypes.array.isRequired,
+  currentList: PropTypes.number,
+};
 
 export default List;

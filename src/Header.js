@@ -1,36 +1,37 @@
-import React, { useState } from 'react';
-import Form from './Form';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import Form from "./Form";
 
 function Header(props) {
-  const [listClassName, setListClassName] = useState(['link active', 'link']);
+  const [listClassName, setListClassName] = useState(["link active", "link"]);
   const dayNames = [
-    'Sunday',
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thursday',
-    'Friday',
-    'Saturday',
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
   ];
   const monthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   function setActive(listId) {
     let newListClassName = [];
-    newListClassName[listId] = 'link active';
-    newListClassName[listId ^ 1] = 'link';
+    newListClassName[listId] = "link active";
+    newListClassName[listId ^ 1] = "link";
 
     setListClassName(newListClassName);
     props.setCurrentList(listId);
@@ -41,7 +42,7 @@ function Header(props) {
     <header>
       <div className="header">
         <div className="date">
-          {dayNames[today.getDay()]}, {monthNames[today.getMonth()]}{' '}
+          {dayNames[today.getDay()]}, {monthNames[today.getMonth()]}{" "}
           {today.getDate()}
         </div>
         <nav>
@@ -60,5 +61,12 @@ function Header(props) {
     </header>
   );
 }
+
+Header.propTypes = {
+  setCurrentList: PropTypes.func.isRequired,
+  verifyInput: PropTypes.func.isRequired,
+  addTask: PropTypes.func.isRequired,
+  activeTask: PropTypes.func.isRequired,
+};
 
 export default Header;
