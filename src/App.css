@@ -88,13 +88,26 @@ li:first-child {
   border-top: none;
 }
 li {
+  position: relative;
   display: flex;
   border-top: 1px solid #8d9196;
   height: 70px;
 }
+.tickBtn {
+  margin-right: 2rem;
+}
 .description {
   flex-grow: 1;
-  margin: auto 2rem;
+  margin: auto 0;
   font-size: 1.6rem;
   color: white;
+}
+.removeBtn {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+}
+.blue {
+  color: #61dbfb;
 }

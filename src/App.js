@@ -9,9 +9,9 @@ function App() {
   const [currentId, setCurrentId] = useState(0);
 
   function findTask(description) {
-    for (let i = 0; i < list.length; i++) {
-      for (let j = 0; j < list[i].length; i++) {
-        if (list[i][j].description === description) {
+    for (let li of list) {
+      for (let task of li) {
+        if (task.description === description) {
           return true;
         }
       }
@@ -40,8 +40,8 @@ function App() {
     let result = [];
     for (let i = 0; i < arr.length; i++) {
       result.push([]);
-      for (let j = 0; j < arr[i].length; j++) {
-        result[i].push({ ...arr[i][j] });
+      for (let task of arr[i]) {
+        result[i].push({ ...task });
       }
     }
     return result;

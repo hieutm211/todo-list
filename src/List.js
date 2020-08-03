@@ -1,6 +1,19 @@
 import React from 'react';
 
 function List(props) {
+  if (props.currentList === 0 && props.list.length === 0) {
+    return (
+      <ul>
+        <li>
+          <div class="description">
+            You currently have <span class="blue">0</span> tasks. Add a task to
+            get started!
+          </div>
+        </li>
+      </ul>
+    );
+  }
+
   return (
     <ul>
       {props.list.map((el, index) => {
