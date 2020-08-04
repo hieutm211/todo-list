@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 function List(props) {
-  if (props.currentList === 0 && props.list.length === 0) {
+  if (props.currentCategory === 0 && props.taskList.length === 0) {
     return (
       <ul>
         <li>
@@ -17,13 +17,10 @@ function List(props) {
 
   return (
     <ul>
-      {props.list.map((el, index) => {
+      {props.taskList.map((el) => {
         return (
           <li key={el.id}>
-            <button
-              className="tickBtn"
-              onClick={() => props.moveTask(props.currentList, index)}
-            >
+            <button className="tickBtn" onClick={() => props.moveTask(el.id)}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="19"
@@ -40,7 +37,7 @@ function List(props) {
             <div className="description">{el.description}</div>
             <button
               className="removeBtn"
-              onClick={() => props.removeTask(props.currentList, index)}
+              onClick={() => props.removeTask(el.id)}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -66,14 +63,14 @@ function List(props) {
 }
 
 List.defaultProps = {
-  currentList: 0,
+  currentCategory: 0,
 };
 
 List.propTypes = {
   moveTask: PropTypes.func.isRequired,
   removeTask: PropTypes.func.isRequired,
-  list: PropTypes.array.isRequired,
-  currentList: PropTypes.number,
+  taskList: PropTypes.array.isRequired,
+  currentCategory: PropTypes.string,
 };
 
 export default List;

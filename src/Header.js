@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Form from "./Form";
 
 function Header(props) {
-  const [listClassName, setListClassName] = useState(["link active", "link"]);
   const dayNames = [
     "Sunday",
     "Monday",
@@ -28,28 +27,30 @@ function Header(props) {
     "December",
   ];
 
-  function setActive(listId) {
-    let newListClassName = [];
-    newListClassName[listId] = "link active";
-    newListClassName[listId ^ 1] = "link";
-
-    setListClassName(newListClassName);
-    props.setCurrentList(listId);
+  function getClassName(category) {
+    return props.currentCategory === category ? "link active" : "link";
   }
 
   const today = new Date();
+
   return (
     <header>
       <div className="header">
         <div className="date">
-          {dayNames[today.getDay()]}, {monthNames[today.getMonth()]}{" "}
-          {today.getDate()}
+          {`${dayNames[today.getDay()]}, 
+          ${monthNames[today.getMonth()]} ${today.getDate()}`}
         </div>
         <nav>
-          <div className={listClassName[0]} onClick={() => setActive(0)}>
+          <div
+            className={getClassName("incomplete")}
+            onClick={() => props.setCurrentCategory("incomplete")}
+          >
             Incomplete Tasks
           </div>
-          <div className={listClassName[1]} onClick={() => setActive(1)}>
+          <div
+            className={getClassName("completed")}
+            onClick={() => props.setCurrentCategory("completed")}
+          >
             Completed Tasks
           </div>
         </nav>
@@ -63,10 +64,11 @@ function Header(props) {
 }
 
 Header.propTypes = {
-  setCurrentList: PropTypes.func.isRequired,
+  setCurrentCategory: PropTypes.func.isRequired,
   verifyInput: PropTypes.func.isRequired,
   addTask: PropTypes.func.isRequired,
-  activeTask: PropTypes.func.isRequired,
+  activeTask: PropTypes.number.isRequired,
+  currentCategory: PropTypes.string.isRequired,
 };
 
 export default Header;

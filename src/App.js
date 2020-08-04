@@ -3,21 +3,25 @@ import Header from "./Header";
 import List from "./List";
 import "./App.css";
 
+/*
+  Task: {
+    id: number
+    category: 'incomplete' / 'completed'
+    description: string
+  }
+
+  data: array of Task
+*/
+
 function App() {
-  const [list, setList] = useState([[], []]);
-  const [currentList, setCurrentList] = useState(0);
+  const [data, setData] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState("incomplete");
   const [currentId, setCurrentId] = useState(0);
 
-  function findTask(description) {
-    for (let li of list) {
-      for (let task of li) {
-        if (task.description === description) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+  function Task(id, category, description) {
+    this.id = id;
+    this.category = category;
+    this.description = description;
   }
 
   function verifyInput(description) {
@@ -25,86 +29,55 @@ function App() {
       return "Please enter in a task";
     }
 
-    if (findTask(description)) {
+    if (data.find((item) => item.description === description)) {
       return "This task already exists";
     }
 
     return null;
   }
 
-  function getCurrentList() {
-    return list[currentList];
-  }
-
-  function copy2DArray(arr) {
-    let result = [];
-    for (let i = 0; i < arr.length; i++) {
-      result.push([]);
-      for (let task of arr[i]) {
-        result[i].push({ ...task });
-      }
-    }
-    return result;
-  }
-
-  function removeElementIn2DArray(arr, row, col) {
-    for (let j = col; j < arr[row].length - 1; j++) {
-      arr[row][j] = arr[row][j + 1];
-    }
-    arr[row].pop();
+  function getTaskList(category) {
+    return data.filter((item) => item.category === category);
   }
 
   function addTask(description) {
-    //copy original list
-    let newList = copy2DArray(list);
-
-    //add task to the incomplete list
-    newList[0].push({ id: currentId, description });
-
-    //set new list
-    setList(newList);
+    setData([...data, new Task(currentId, "incomplete", description)]);
     setCurrentId(currentId + 1);
   }
 
-  function removeTask(currentList, index) {
-    //copy original list
-    let newList = copy2DArray(list);
-
-    //remove task
-    removeElementIn2DArray(newList, currentList, index);
-
-    //set new list
-    setList(newList);
+  function removeTask(id) {
+    let newData = data.reject((item) => item.id === id);
+    setData(newData);
   }
 
-  function moveTask(currentList, index) {
-    //copy this task
-    let task = { ...list[currentList][index] };
+  function moveTask(id) {
+    let newData = data.map(function (item) {
+      if (item.id === id) {
+        let mappedItem = { ...item };
+        mappedItem.category =
+          item.category === "completed" ? "incomplete" : "completed";
+        return mappedItem;
+      }
+      return item;
+    });
 
-    //copy the original array
-    let newList = copy2DArray(list);
-
-    //remove it from current list
-    removeElementIn2DArray(newList, currentList, index);
-
-    //add it to the other list
-    newList[currentList ^ 1].push(task);
-    setList(newList);
+    setData(newData);
   }
 
   return (
     <div className="App">
       <div className="container">
         <Header
-          setCurrentList={setCurrentList}
-          activeTask={list[0].length}
-          addTask={addTask}
+          setCurrentCategory={setCurrentCategory}
           verifyInput={verifyInput}
+          addTask={addTask}
+          activeTask={getTaskList("incomplete").length}
+          currentCategory={currentCategory}
         />
 
         <List
-          list={getCurrentList()}
-          currentList={currentList}
+          taskList={getTaskList(currentCategory)}
+          currentCategory={currentCategory}
           moveTask={moveTask}
           removeTask={removeTask}
         />
