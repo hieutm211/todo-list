@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import Header from "./Header";
-import List from "./List";
-import "./App.css";
+import React, { useState } from 'react'
+import Header from './Header'
+import List from './List'
+import './App.css'
 
 /*
   Task: {
@@ -14,54 +14,54 @@ import "./App.css";
 */
 
 function App() {
-  const [data, setData] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState("incomplete");
-  const [currentId, setCurrentId] = useState(0);
+  const [data, setData] = useState([])
+  const [currentCategory, setCurrentCategory] = useState('incomplete')
+  const [currentId, setCurrentId] = useState(0)
 
   function Task(id, category, description) {
-    this.id = id;
-    this.category = category;
-    this.description = description;
+    this.id = id
+    this.category = category
+    this.description = description
   }
 
   function verifyInput(description) {
-    if (description === "") {
-      return "Please enter in a task";
+    if (description === '') {
+      return 'Please enter in a task'
     }
 
     if (data.find((item) => item.description === description)) {
-      return "This task already exists";
+      return 'This task already exists'
     }
 
-    return null;
+    return null
   }
 
   function getTaskList(category) {
-    return data.filter((item) => item.category === category);
+    return data.filter((item) => item.category === category)
   }
 
   function addTask(description) {
-    setData([...data, new Task(currentId, "incomplete", description)]);
-    setCurrentId(currentId + 1);
+    setData([...data, new Task(currentId, 'incomplete', description)])
+    setCurrentId(currentId + 1)
   }
 
   function removeTask(id) {
-    let newData = data.reject((item) => item.id === id);
-    setData(newData);
+    const newData = data.reject((item) => item.id === id)
+    setData(newData)
   }
 
   function moveTask(id) {
-    let newData = data.map(function (item) {
+    const newData = data.map(function (item) {
       if (item.id === id) {
-        let mappedItem = { ...item };
+        const mappedItem = { ...item }
         mappedItem.category =
-          item.category === "completed" ? "incomplete" : "completed";
-        return mappedItem;
+          item.category === 'completed' ? 'incomplete' : 'completed'
+        return mappedItem
       }
-      return item;
-    });
+      return item
+    })
 
-    setData(newData);
+    setData(newData)
   }
 
   return (
@@ -71,7 +71,7 @@ function App() {
           setCurrentCategory={setCurrentCategory}
           verifyInput={verifyInput}
           addTask={addTask}
-          activeTask={getTaskList("incomplete").length}
+          activeTask={getTaskList('incomplete').length}
           currentCategory={currentCategory}
         />
 
@@ -83,7 +83,7 @@ function App() {
         />
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

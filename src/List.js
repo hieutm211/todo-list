@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react'
+import PropTypes from 'prop-types'
 
 function List(props) {
   if (props.currentCategory === 0 && props.taskList.length === 0) {
@@ -12,7 +12,7 @@ function List(props) {
           </div>
         </li>
       </ul>
-    );
+    )
   }
 
   return (
@@ -56,21 +56,21 @@ function List(props) {
               </svg>
             </button>
           </li>
-        );
+        )
       })}
     </ul>
-  );
+  )
 }
 
 List.defaultProps = {
   currentCategory: 0,
-};
+}
 
 List.propTypes = {
   moveTask: PropTypes.func.isRequired,
   removeTask: PropTypes.func.isRequired,
   taskList: PropTypes.array.isRequired,
   currentCategory: PropTypes.string,
-};
+}
 
-export default List;
+export default List

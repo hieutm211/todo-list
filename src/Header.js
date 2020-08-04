@@ -1,37 +1,37 @@
-import React from "react";
-import PropTypes from "prop-types";
-import Form from "./Form";
+import React from 'react'
+import PropTypes from 'prop-types'
+import Form from './Form'
 
 function Header(props) {
   const dayNames = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ]
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
 
   function getClassName(category) {
-    return props.currentCategory === category ? "link active" : "link";
+    return props.currentCategory === category ? 'link active' : 'link'
   }
 
-  const today = new Date();
+  const today = new Date()
 
   return (
     <header>
@@ -42,14 +42,14 @@ function Header(props) {
         </div>
         <nav>
           <div
-            className={getClassName("incomplete")}
-            onClick={() => props.setCurrentCategory("incomplete")}
+            className={getClassName('incomplete')}
+            onClick={() => props.setCurrentCategory('incomplete')}
           >
             Incomplete Tasks
           </div>
           <div
-            className={getClassName("completed")}
-            onClick={() => props.setCurrentCategory("completed")}
+            className={getClassName('completed')}
+            onClick={() => props.setCurrentCategory('completed')}
           >
             Completed Tasks
           </div>
@@ -60,7 +60,7 @@ function Header(props) {
 
       <Form verifyInput={props.verifyInput} addTask={props.addTask} />
     </header>
-  );
+  )
 }
 
 Header.propTypes = {
@@ -69,6 +69,6 @@ Header.propTypes = {
   addTask: PropTypes.func.isRequired,
   activeTask: PropTypes.number.isRequired,
   currentCategory: PropTypes.string.isRequired,
-};
+}
 
-export default Header;
+export default Header

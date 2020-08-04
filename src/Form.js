@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 function Form(props) {
-  const [description, setDescription] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [description, setDescription] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   function handleChange(event) {
-    setDescription(event.target.value);
+    setDescription(event.target.value)
   }
 
   function handleKeyDown(event) {
-    if (event.key === "Enter") {
-      addTask(description);
+    if (event.key === 'Enter') {
+      addTask(description)
     }
   }
 
   function addTask(description) {
-    description = description.trim();
+    description = description.trim()
 
-    let error = props.verifyInput(description);
+    const error = props.verifyInput(description)
     if (!error) {
-      setErrorMessage(null);
-      props.addTask(description);
-      setDescription("");
+      setErrorMessage(null)
+      props.addTask(description)
+      setDescription('')
     } else {
-      setErrorMessage(error);
+      setErrorMessage(error)
     }
   }
 
@@ -43,12 +43,12 @@ function Form(props) {
 
       <div className="errorMsg">{errorMessage}</div>
     </div>
-  );
+  )
 }
 
 Form.propTypes = {
   verifyInput: PropTypes.func.isRequired,
   addTask: PropTypes.func.isRequired,
-};
+}
 
-export default Form;
+export default Form
